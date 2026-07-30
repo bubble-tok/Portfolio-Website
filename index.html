@@ -551,6 +551,202 @@
     font-size: 12.5px;
     color: var(--text-on-dark-dim);
   }
+
+  /* ---------- HERO CURSOR GLOW ---------- */
+  .hero-glow{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background: radial-gradient(420px circle at var(--gx,50%) var(--gy,15%), rgba(18,184,134,0.14), transparent 70%);
+  }
+
+  /* ---------- CARD: signature accent + tilt + case-study affordance ---------- */
+  .card{
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .card-sig{
+    position:absolute;
+    top: 30px;
+    right: 30px;
+    width: 44px;
+    height: 28px;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .4s var(--ease), transform .4s var(--ease);
+    pointer-events:none;
+  }
+  .card:hover .card-sig, .card:focus-visible .card-sig{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .card-sig svg{ width:100%; height:100%; overflow:visible; }
+  .card.feature .card-sig .sig-node{ fill: var(--accent-light); }
+
+  .card-cta{
+    margin-top: 20px;
+    display:flex;
+    align-items:center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .card.feature .card-cta{ color: var(--accent-light); }
+  .card-cta svg{
+    width: 13px; height: 13px;
+    transition: transform .3s var(--ease);
+  }
+  .card:hover .card-cta svg, .card:focus-visible .card-cta svg{
+    transform: translateX(4px);
+  }
+
+  /* ---------- CASE STUDY MODAL ---------- */
+  .case-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 24px;
+    background: rgba(8,10,9,0.55);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s var(--ease), visibility 0s linear .4s;
+  }
+  .case-overlay.open{
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .4s var(--ease), visibility 0s;
+  }
+  .case-panel{
+    width: 100%;
+    max-width: 720px;
+    max-height: 84vh;
+    overflow-y: auto;
+    background: var(--bg);
+    border-radius: 24px;
+    padding: 48px 44px;
+    transform: translateY(24px) scale(.98);
+    transition: transform .45s var(--ease);
+  }
+  .case-overlay.open .case-panel{ transform: translateY(0) scale(1); }
+  .case-panel.on-dark{ background: var(--bg-dark-2); color: var(--text-on-dark); }
+  .case-close{
+    position: sticky;
+    top: 0;
+    float: right;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--bg-dim);
+    border: none;
+    font-size: 18px;
+    line-height: 1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color: var(--text);
+    transition: background .25s;
+  }
+  .case-panel.on-dark .case-close{ background: rgba(255,255,255,0.08); color: var(--text-on-dark); }
+  .case-close:hover{ background: rgba(0,0,0,0.12); }
+  .case-panel.on-dark .case-close:hover{ background: rgba(255,255,255,0.16); }
+  .case-tag{
+    font-size: 11.5px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color: var(--accent);
+  }
+  .case-panel.on-dark .case-tag{ color: var(--accent-light); }
+  .case-panel h3{
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 12px 0 24px;
+    clear: both;
+  }
+  .case-block{ margin-bottom: 26px; }
+  .case-block h4{
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .case-panel.on-dark .case-block h4{ color: var(--text-on-dark-dim); }
+  .case-block p{
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .case-panel.on-dark .case-block p{ color: var(--text-on-dark); }
+  .case-stack{
+    margin-top: 30px;
+    padding-top: 26px;
+    border-top: 1px solid var(--divider);
+    display:flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .case-panel.on-dark .case-stack{ border-top-color: var(--divider-dark); }
+  .case-stack span{
+    font-size: 12px;
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: var(--bg-dim);
+    color: var(--text-dim);
+  }
+  .case-panel.on-dark .case-stack span{ background: rgba(255,255,255,0.08); color: var(--text-on-dark-dim); }
+
+  /* ---------- SIDE PROGRESS RAIL ---------- */
+  .rail{
+    position: fixed;
+    right: 26px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 90;
+    display:flex;
+    flex-direction:column;
+    gap: 16px;
+  }
+  .rail a{
+    display:block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(130,130,130,0.4);
+    transition: background .3s, transform .3s;
+    position: relative;
+  }
+  .rail a::after{
+    content: attr(data-label);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(140,140,140,0.95);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity .25s;
+    pointer-events: none;
+  }
+  .rail a:hover::after{ opacity: 1; }
+  .rail a.active{
+    background: var(--accent-light);
+    transform: scale(1.4);
+  }
+  @media (max-width: 900px){
+    .rail{ display:none; }
+  }
 </style>
 </head>
 <body>
@@ -568,7 +764,18 @@
   </div>
 </header>
 
+<nav class="rail" aria-label="Section progress">
+  <a href="#top" data-label="Top"></a>
+  <a href="#about" data-label="About"></a>
+  <a href="#work" data-label="Work"></a>
+  <a href="#skills" data-label="Skills"></a>
+  <a href="#experience" data-label="Experience"></a>
+  <a href="#education" data-label="Education"></a>
+  <a href="#contact" data-label="Contact"></a>
+</nav>
+
 <section class="hero" id="top">
+  <div class="hero-glow" id="heroGlow"></div>
   <h1>Building at the intersection<br>of <em>code</em> and <em>chemistry</em></h1>
   <p class="sub">Computer Science &amp; Chemistry double major who ships full products end to end</p>
   <div class="hero-meta">
@@ -632,48 +839,138 @@
     </div>
 
     <div class="project-grid">
-      <div class="card feature reveal">
+      <div class="card feature reveal" data-case="onlyone">
+        <div class="card-sig">
+          <svg viewBox="0 0 46 30" fill="none">
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="6"/>
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="24"/>
+            <line class="sig-edge" x1="23" y1="6" x2="40" y2="15"/>
+            <line class="sig-edge" x1="23" y1="24" x2="40" y2="15"/>
+            <circle class="sig-node" cx="6" cy="15" r="3"/>
+            <circle class="sig-node alt" cx="23" cy="6" r="2.2"/>
+            <circle class="sig-node alt" cx="23" cy="24" r="2.2"/>
+            <circle class="sig-node" cx="40" cy="15" r="3"/>
+          </svg>
+        </div>
         <div class="tag">Independent Product · May 2025 to Present</div>
         <h3>OnlyOne</h3>
         <p>A matching app that connects people through personality, not just photos. Built the entire product solo: onboarding flow, Firebase backend with role-based access, and a prompt pipeline that turns free-text answers into structured matchmaking data via the OpenAI API.</p>
         <div class="stack">
           <span>Flutter</span><span>Firebase</span><span>OpenAI API</span><span>Dart</span>
         </div>
+        <div class="card-cta">View case study
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8M9 4l4 4-4 4"/></svg>
+        </div>
       </div>
 
-      <div class="card reveal">
+      <div class="card reveal" data-case="sandbox">
+        <div class="card-sig">
+          <svg viewBox="0 0 46 30" fill="none">
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="6"/>
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="24"/>
+            <line class="sig-edge" x1="23" y1="6" x2="40" y2="15"/>
+            <line class="sig-edge" x1="23" y1="24" x2="40" y2="15"/>
+            <circle class="sig-node" cx="6" cy="15" r="3"/>
+            <circle class="sig-node alt" cx="23" cy="6" r="2.2"/>
+            <circle class="sig-node alt" cx="23" cy="24" r="2.2"/>
+            <circle class="sig-node" cx="40" cy="15" r="3"/>
+          </svg>
+        </div>
         <div class="tag">Team of 3 · 2024</div>
         <h3>2D Sandbox Game</h3>
         <p>A Minecraft-style sandbox built in C with SFML: procedural terrain, block editing, and a real-time render loop. Owned the collision system and game loop architecture.</p>
         <div class="stack"><span>C</span><span>SFML</span><span>Git</span></div>
+        <div class="card-cta">View case study
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8M9 4l4 4-4 4"/></svg>
+        </div>
       </div>
 
-      <div class="card reveal">
+      <div class="card reveal" data-case="escaperoom">
+        <div class="card-sig">
+          <svg viewBox="0 0 46 30" fill="none">
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="6"/>
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="24"/>
+            <line class="sig-edge" x1="23" y1="6" x2="40" y2="15"/>
+            <line class="sig-edge" x1="23" y1="24" x2="40" y2="15"/>
+            <circle class="sig-node" cx="6" cy="15" r="3"/>
+            <circle class="sig-node alt" cx="23" cy="6" r="2.2"/>
+            <circle class="sig-node alt" cx="23" cy="24" r="2.2"/>
+            <circle class="sig-node" cx="40" cy="15" r="3"/>
+          </svg>
+        </div>
         <div class="tag">Team of 4 · 2023</div>
         <h3>Escape Room Adventure</h3>
         <p>A multi-room puzzle game in Java with branching logic and an inventory system. Designed the core game-state architecture the rest of the team built on.</p>
         <div class="stack"><span>Java</span><span>OOP</span><span>Event-driven UI</span></div>
+        <div class="card-cta">View case study
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8M9 4l4 4-4 4"/></svg>
+        </div>
       </div>
 
-      <div class="card reveal">
+      <div class="card reveal" data-case="clientsites">
+        <div class="card-sig">
+          <svg viewBox="0 0 46 30" fill="none">
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="6"/>
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="24"/>
+            <line class="sig-edge" x1="23" y1="6" x2="40" y2="15"/>
+            <line class="sig-edge" x1="23" y1="24" x2="40" y2="15"/>
+            <circle class="sig-node" cx="6" cy="15" r="3"/>
+            <circle class="sig-node alt" cx="23" cy="6" r="2.2"/>
+            <circle class="sig-node alt" cx="23" cy="24" r="2.2"/>
+            <circle class="sig-node" cx="40" cy="15" r="3"/>
+          </svg>
+        </div>
         <div class="tag">Solo · 4-week delivery</div>
         <h3>Client Portfolio Sites</h3>
         <p>Two production websites, personal and commissioned, shipped from brief to deployment in four weeks, handling design, build, and accessibility alone.</p>
         <div class="stack"><span>HTML/CSS</span><span>JavaScript</span><span>WCAG</span></div>
+        <div class="card-cta">View case study
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8M9 4l4 4-4 4"/></svg>
+        </div>
       </div>
 
-      <div class="card reveal">
+      <div class="card reveal" data-case="seniorbridgers">
+        <div class="card-sig">
+          <svg viewBox="0 0 46 30" fill="none">
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="6"/>
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="24"/>
+            <line class="sig-edge" x1="23" y1="6" x2="40" y2="15"/>
+            <line class="sig-edge" x1="23" y1="24" x2="40" y2="15"/>
+            <circle class="sig-node" cx="6" cy="15" r="3"/>
+            <circle class="sig-node alt" cx="23" cy="6" r="2.2"/>
+            <circle class="sig-node alt" cx="23" cy="24" r="2.2"/>
+            <circle class="sig-node" cx="40" cy="15" r="3"/>
+          </svg>
+        </div>
         <div class="tag">Non-profit · 2023 to 2025</div>
         <h3>Senior Bridgers Web Presence</h3>
         <p>Owned the full website lifecycle for an immigrant senior community organization, iterating on layout and an events calendar that grew attendance.</p>
         <div class="stack"><span>Squarespace</span><span>Content strategy</span></div>
+        <div class="card-cta">View case study
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8M9 4l4 4-4 4"/></svg>
+        </div>
       </div>
 
-      <div class="card reveal">
+      <div class="card reveal" data-case="timeannouncement">
+        <div class="card-sig">
+          <svg viewBox="0 0 46 30" fill="none">
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="6"/>
+            <line class="sig-edge" x1="6" y1="15" x2="23" y2="24"/>
+            <line class="sig-edge" x1="23" y1="6" x2="40" y2="15"/>
+            <line class="sig-edge" x1="23" y1="24" x2="40" y2="15"/>
+            <circle class="sig-node" cx="6" cy="15" r="3"/>
+            <circle class="sig-node alt" cx="23" cy="6" r="2.2"/>
+            <circle class="sig-node alt" cx="23" cy="24" r="2.2"/>
+            <circle class="sig-node" cx="40" cy="15" r="3"/>
+          </svg>
+        </div>
         <div class="tag">Solo · In Progress, 2026</div>
         <h3>Time Announcement</h3>
         <p>A Flutter mobile app that speaks the current time out loud on a set schedule, so you can tell the time without looking at your phone. Practicing full product process alongside the code: requirements, architecture docs, UML, and a Jira backlog.</p>
         <div class="stack"><span>Flutter</span><span>Dart</span><span>Text to Speech</span></div>
+        <div class="card-cta">View case study
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8M9 4l4 4-4 4"/></svg>
+        </div>
       </div>
     </div>
   </div>
@@ -791,6 +1088,10 @@
   </div>
 </section>
 
+<div class="case-overlay" id="caseOverlay">
+  <div class="case-panel" id="casePanel"></div>
+</div>
+
 <script>
   // nav background swap over dark sections
   const nav = document.getElementById('siteNav');
@@ -828,6 +1129,171 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el=> io.observe(el));
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover)').matches;
+
+  // ---------- hero cursor glow ----------
+  const heroEl = document.querySelector('.hero');
+  const heroGlow = document.getElementById('heroGlow');
+  if(heroEl && heroGlow && !prefersReduced && canHover){
+    heroEl.addEventListener('mousemove', (e)=>{
+      const r = heroEl.getBoundingClientRect();
+      const gx = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%';
+      const gy = ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
+      heroGlow.style.setProperty('--gx', gx);
+      heroGlow.style.setProperty('--gy', gy);
+    });
+  }
+
+  // ---------- card magnetic tilt ----------
+  if(!prefersReduced && canHover){
+    document.querySelectorAll('.card').forEach(card=>{
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 8).toFixed(2)}deg) translateY(-6px)`;
+      });
+      card.addEventListener('mouseleave', ()=>{
+        card.style.transform = '';
+      });
+    });
+  }
+
+  // ---------- side progress rail ----------
+  const railLinks = document.querySelectorAll('.rail a');
+  const railSections = Array.from(railLinks).map(a => document.querySelector(a.getAttribute('href')));
+  function updateRail(){
+    const y = window.scrollY + window.innerHeight / 2;
+    let activeIdx = 0;
+    railSections.forEach((sec, i)=>{
+      if(sec && sec.offsetTop <= y) activeIdx = i;
+    });
+    railLinks.forEach((a, i)=> a.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateRail, { passive:true });
+  updateRail();
+
+  // ---------- case study modal ----------
+  const CASE_STUDIES = {
+    onlyone: {
+      dark: true,
+      tag: 'Independent Product · May 2025 to Present',
+      title: 'OnlyOne',
+      blocks: [
+        { h: 'The problem', p: 'Most dating apps optimize for photos and a swipe-first browsing habit. I wanted to try the opposite: a matching experience built around who someone actually is, not how their first photo performs.' },
+        { h: 'What I built', p: 'A Flutter app end to end, solo: an onboarding flow backed by Firebase with role-based access control, and a prompt pipeline that sends free-text answers to the OpenAI API and gets back structured JSON the matching logic can actually use.' },
+        { h: 'Key decisions', p: 'The hardest part wasn\u2019t the UI, it was making the OpenAI pipeline reliable, getting consistent structured output from open-ended text answers took real iteration on prompt design, not just a single call and hope.' },
+        { h: 'Where it stands', p: 'The core flow works end to end. I paused polishing the onboarding UI to focus on job applications this cycle, it\u2019s a live, working build, not an abandoned one.' },
+      ],
+      stack: ['Flutter', 'Firebase', 'OpenAI API', 'Dart'],
+    },
+    sandbox: {
+      dark: false,
+      tag: 'Team of 3 · 2024',
+      title: '2D Sandbox Game',
+      blocks: [
+        { h: 'The problem', p: 'A systems-programming exercise: build a Minecraft-style sandbox from scratch in C, with no engine doing the heavy lifting for you.' },
+        { h: 'What I built', p: 'Procedural terrain generation, live block editing, and a real-time render loop using SFML for graphics and input.' },
+        { h: 'My role', p: 'I owned the collision system and the core game loop architecture, the part everything else on the team\u2019s work had to run inside of.' },
+      ],
+      stack: ['C', 'SFML', 'Git'],
+    },
+    escaperoom: {
+      dark: false,
+      tag: 'Team of 4 · 2023',
+      title: 'Escape Room Adventure',
+      blocks: [
+        { h: 'The problem', p: 'Build a multi-room puzzle game with real branching logic and an inventory system, in Java, as a team of four.' },
+        { h: 'My role', p: 'I designed the core game-state architecture, how rooms, puzzle state, and inventory tracked and transitioned, that the rest of the team built their puzzles and UI on top of.' },
+        { h: 'Key decisions', p: 'Leaned on OOP and an event-driven UI so new rooms and puzzles could be added without rewriting the state logic underneath them.' },
+      ],
+      stack: ['Java', 'OOP', 'Event-driven UI'],
+    },
+    clientsites: {
+      dark: false,
+      tag: 'Solo · 4-week delivery',
+      title: 'Client Portfolio Sites',
+      blocks: [
+        { h: 'The problem', p: 'Two production websites, one personal and one commissioned, both needing to go from a client brief to a deployed, accessible site in four weeks.' },
+        { h: 'What I owned', p: 'Everything: design decisions, the build itself, and accessibility, testing against WCAG rather than treating it as an afterthought.' },
+        { h: 'Outcome', p: 'Both sites shipped and deployed on schedule, working solo through the full brief-to-launch cycle.' },
+      ],
+      stack: ['HTML/CSS', 'JavaScript', 'WCAG'],
+    },
+    seniorbridgers: {
+      dark: false,
+      tag: 'Non-profit · 2023 to 2025',
+      title: 'Senior Bridgers Web Presence',
+      blocks: [
+        { h: 'The problem', p: 'Senior Bridgers supports immigrant seniors, a community that needed a clear, accessible web presence more than a flashy one.' },
+        { h: 'What I owned', p: 'The full website lifecycle over two years, as Marketing & Education Executive Director, layout, content strategy, and an events calendar I iterated on repeatedly based on what actually got people to show up.' },
+        { h: 'Outcome', p: 'The events calendar iteration measurably grew attendance over the two years I ran it.' },
+      ],
+      stack: ['Squarespace', 'Content strategy'],
+    },
+    timeannouncement: {
+      dark: false,
+      tag: 'Solo · In Progress, 2026',
+      title: 'Time Announcement',
+      blocks: [
+        { h: 'The problem', p: 'A simple need, knowing the time without pulling out your phone, used as a deliberate exercise in practicing real software process, not just writing code.' },
+        { h: 'What I built', p: 'A Flutter app that announces the time via text-to-speech at set intervals, with functional requirements, architecture docs, and UML written before implementation.' },
+        { h: 'Key decisions', p: 'Scoped the first version down hard: hardcoded announce times, one global ON/OFF toggle, volume as the only setting. Everything else, like per-day scheduling, went into a dedicated "Future Extensions" epic in Jira instead of bloating the beta.' },
+        { h: 'Where it stands', p: 'In active development, currently implementing permission handling. Managed end to end in Jira with a real backlog, not just a single running task list.' },
+      ],
+      stack: ['Flutter', 'Dart', 'Text to Speech', 'Jira'],
+    },
+  };
+
+  const overlay = document.getElementById('caseOverlay');
+  const panel = document.getElementById('casePanel');
+  let lastFocused = null;
+
+  function openCase(id){
+    const data = CASE_STUDIES[id];
+    if(!data) return;
+    lastFocused = document.activeElement;
+    panel.classList.toggle('on-dark', !!data.dark);
+    panel.innerHTML = `
+      <button class="case-close" aria-label="Close case study">&times;</button>
+      <div class="case-tag">${data.tag}</div>
+      <h3>${data.title}</h3>
+      ${data.blocks.map(b => `<div class="case-block"><h4>${b.h}</h4><p>${b.p}</p></div>`).join('')}
+      <div class="case-stack">${data.stack.map(s => `<span>${s}</span>`).join('')}</div>
+    `;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    const closeBtn = panel.querySelector('.case-close');
+    closeBtn.addEventListener('click', closeCase);
+    closeBtn.focus();
+  }
+
+  function closeCase(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if(lastFocused) lastFocused.focus();
+  }
+
+  document.querySelectorAll('.card[data-case]').forEach(card=>{
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.addEventListener('click', ()=> openCase(card.dataset.case));
+    card.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openCase(card.dataset.case);
+      }
+    });
+  });
+
+  overlay.addEventListener('click', (e)=>{
+    if(e.target === overlay) closeCase();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && overlay.classList.contains('open')) closeCase();
+  });
 </script>
 
 </body>
